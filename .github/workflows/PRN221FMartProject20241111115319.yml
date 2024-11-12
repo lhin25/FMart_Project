@@ -37,22 +37,19 @@ jobs:
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    permissions:
-      id-token: write
     steps:
     - name: Download artifact from build job
       uses: actions/download-artifact@v3
       with:
         name: webapp
-      
+        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
     - name: Login to Azure
       uses: azure/login@v2
       with:
-          creds: ${{ secrets.PRN221FMARTPROJECT20241111115319_651F }}
-
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
     - name: Deploy to Azure WebApp
       uses: azure/webapps-deploy@v2
       with:
-        app-name: 'prn221fmart'
-        slot-name: 'Production'
-        package: .
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        publish-profile: ${{ secrets.PRN221FMartProject20241111115319_651F }}
+        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
