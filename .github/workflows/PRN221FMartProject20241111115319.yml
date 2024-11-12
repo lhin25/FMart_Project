@@ -34,15 +34,20 @@ jobs:
   deploy:
     runs-on: windows-latest
     needs: build
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    permissions:
+      id-token: write
     steps:
     - name: Download artifact from build job
       uses: actions/download-artifact@v3
       with:
         name: webapp
-        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+
     - name: Deploy to Azure WebApp
       uses: azure/webapps-deploy@v2
       with:
-        app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        publish-profile: ${{ secrets.PRN221FMartProject20241111115319_651F }}
-        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        app-name: 'prn221fmart'
+        slot-name: 'Production'
+        package: .
