@@ -6,7 +6,10 @@ namespace DataAccess.DataContext
 {
     public class ApplicationContext : DbContext
     {
-        public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options) { }
+        public ApplicationContext() { }
+        public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options) {
+            
+        }
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
@@ -21,6 +24,19 @@ namespace DataAccess.DataContext
         public DbSet<Note> Notes { get; set; }
         public DbSet<NoteDetail> NoteDetails { get; set; }
         public DbSet<Staff> Staffs { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                IConfigurationRoot configuration = new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile("appsettings.json")
+                    .Build();
+                var connectionString = configuration.GetConnectionString("DefaultConnection");
+                optionsBuilder.UseSqlServer(connectionString);
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -57,7 +73,7 @@ namespace DataAccess.DataContext
             modelBuilder.Entity<Invoice>()
                 .HasOne(i => i.Customer)
                 .WithMany(c => c.Invoices)
-                .HasForeignKey(ic =>  ic.CustomerId)
+                .HasForeignKey(ic => ic.CustomerId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(modelBuilder);

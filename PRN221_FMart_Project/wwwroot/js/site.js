@@ -1,4 +1,11 @@
-﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿$('.toggle').on('click', function () {
+    $('.sidebar').toggleClass('close');
+});
 
-// Write your JavaScript code.
+let arrows = document.querySelectorAll('.arrow');
+for (var i = 0; i < arrows.length; i++) {
+    arrows[i].addEventListener("click", (e) => {
+        let arrowParrent = e.target.parentElement.parentElement;
+        arrowParrent.classList.toggle("show");
+    })
+}

@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{98866403-2715-4790-8951-89733693C75D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{98866403-2715-4790-8951-89733693C75D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Service\Service.csproj", "{F3CCB6E8-F837-4581-900A-394D55A6C89E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service", "Service\Service.csproj", "{F3CCB6E8-F837-4581-900A-394D55A6C89E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PRN221_FMart_Project", "PRN221_FMart_Project\PRN221_FMart_Project.csproj", "{F6418944-D1E9-4494-A543-05A4F5AE5744}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PRN221_FMart_Project", "PRN221_FMart_Project\PRN221_FMart_Project.csproj", "{F6418944-D1E9-4494-A543-05A4F5AE5744}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

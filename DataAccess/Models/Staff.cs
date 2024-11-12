@@ -16,7 +16,7 @@ namespace DataAccess.Models
         [StringLength(11)]
         public string? PhoneNumber { get; set; }
         public DateTime StartDate { get; set; } = DateTime.Now;
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; } = true;
         public virtual ICollection<Invoice> Invoices { get; set; }
     }
 }

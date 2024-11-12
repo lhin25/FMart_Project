@@ -1,0 +1,67 @@
+﻿@page
+@model PRN221_FMart_Project.Pages.LoginModel
+@{
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FMart Login</title>
+    <link rel="stylesheet" type="text/css" href="~/css/login.css">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <img class="wave" src="~/img/wave.png">
+    <div class="container">
+        <div class="img">
+            <img src="~/img/inventory.svg">
+        </div>
+        <div class="login-content">
+            <form method="post">
+                <img src="~/img/avatar.svg">
+                <h2 class="title">Welcome</h2>
+                <div class="input-div one">
+                    <div class="i">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="div">
+                        <h5><label asp-for="@Model.Email">E-mail</label></h5>
+                        <input type="text" class="input" asp-for="@Model.Email" />
+                        <span asp-validation-for="@Model.Email" class="text-danger"></span>
+
+                        @if (!string.IsNullOrEmpty(@Model.ErrorMessage))
+                        {
+                            <span class="text-danger">@Model.ErrorMessage</span>
+                        }
+                    </div>
+                </div>
+                <div class="input-div pass">
+                    <div class="i">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="div">
+
+                        <h5><label asp-for="@Model.Password">Password</label></h5>
+
+                        <input type="password" class="input" asp-for="@Model.Password" />
+                        <span asp-validation-for="@Model.Password" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="remember-forgot">
+
+                    <label asp-for="@Model.RememberMe">
+                        <input asp-for="@Model.RememberMe" type="checkbox" />
+                        Remember me
+                    </label>
+                    <a asp-page="./ForgotPassword">Forgot Password?</a>
+                </div>
+
+                <input type="submit" class="btn" value="Login">
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript" src="js/login.js"></script>
+</body>
+</html>

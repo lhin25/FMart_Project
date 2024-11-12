@@ -7,9 +7,12 @@ namespace DataAccess.DataContext
     {
         public static void Initialize(ApplicationContext context)
         {
-            context.Database.EnsureCreated();
 
-            if(context.Categories.Any())
+            if (context.Categories.Any())
+            {
+                return;
+            }
+            else
             {
                 var categories = new List<Category>
                 {
@@ -26,18 +29,26 @@ namespace DataAccess.DataContext
 
             if (context.Roles.Any())
             {
+                return;
+            }
+            else
+            {
                 var roles = new List<Role>
                 {
                     new Role { RoleId = 0, RoleName = "Admin" },
-                    new Role { RoleId = 1, RoleName = "Quản lý cửa hàng" },
-                    new Role { RoleId = 2, RoleName = "Thủ kho" },
-                    new Role { RoleId = 3, RoleName = "Thu ngân" }
+                    new Role { RoleId = 1, RoleName = "Shop Manager" },
+                    new Role { RoleId = 2, RoleName = "Stockkeeper" },
+                    new Role { RoleId = 3, RoleName = "Cashier" }
                 };
                 context.Roles.AddRange(roles);
                 context.SaveChanges();
             }
 
             if (context.Staffs.Any())
+            {
+                return;
+            }
+            else
             {
                 Cryptography cryptography = new Cryptography();
                 var staffs = new List<Staff>
@@ -51,26 +62,30 @@ namespace DataAccess.DataContext
                 context.SaveChanges();
             }
 
-            if(context.Suppliers.Any())
+            if (context.Suppliers.Any())
             {
-                var suppliers = new List<Supplier>
+                return;
+            }
+            var suppliers = new List<Supplier>
                 {
                     new Supplier { CompanyName = "Công ty TNHH Nestlé Việt Nam", PhoneNumber = "02839113737", Email = "consumer.services@vn.nestle.com", Address = "KCN Biên hòa 2, P. Long Bình, TP. Biên Hoà, Đồng Nai"},
                     new Supplier{ CompanyName = "Công ty TNHH URC Việt Nam", Email = "info@urcvn.com"}
                 };
-            }
+            context.Suppliers.AddRange(suppliers);
+            context.SaveChanges();
 
             if (context.Products.Any())
             {
-                var products = new List<Product>
-                {
-                    new Product{ ProductName = "MAGGI Nước tương thanh dịu 450ml", SupplierId = context.Suppliers.First(s => s.CompanyName == "Công ty TNHH Nestlé Việt Nam").SupplierId, Barcode = "8934804043647", CategoryId = context.Categories.First(c => c.CategoryName == "Kitchenware and Dinnerware").CategoryId, ImportPrice = 20000, RetailPrice = 21400 },
-                    new Product{ ProductName = "MAGGI Nước tương đậm đặc 700ml", SupplierId = context.Suppliers.First(s => s.CompanyName == "Công ty TNHH Nestlé Việt Nam").SupplierId, Barcode = "8934804020402", CategoryId = context.Categories.First(c => c.CategoryName == "Kitchenware and Dinnerware").CategoryId, ImportPrice = 35000, RetailPrice = 37400 },
-                    new Product{ ProductName = "C2 Trà đen hương dâu anh đào Freeze 455ml", SupplierId = context.Suppliers.First(s => s.CompanyName == "Công ty TNHH URC Việt Nam").SupplierId, Barcode = "8934564600869", CategoryId = context.Categories.First(c => c.CategoryName == "Beverages").CategoryId, ImportPrice = 8000, RetailPrice = 10400}
-                };
-                context.Products.AddRange(products);
-                context.SaveChanges();
+                return;
             }
+            var products = new List<Product>
+                {
+                    new Product{ ProductName = "MAGGI Nước tương thanh dịu 450ml", SupplierId = context.Suppliers.First(s => s.CompanyName == "Công ty TNHH Nestlé Việt Nam").SupplierId, Barcode = "8934804043647", CategoryId = context.Categories.First(c => c.CategoryName == "Dụng cụ và đồ dùng nhà bếp").CategoryId, ImportPrice = 20000, RetailPrice = 21400 },
+                    new Product{ ProductName = "MAGGI Nước tương đậm đặc 700ml", SupplierId = context.Suppliers.First(s => s.CompanyName == "Công ty TNHH Nestlé Việt Nam").SupplierId, Barcode = "8934804020402", CategoryId = context.Categories.First(c => c.CategoryName == "Dụng cụ và đồ dùng nhà bếp").CategoryId, ImportPrice = 35000, RetailPrice = 37400 },
+                    new Product{ ProductName = "C2 Trà đen hương dâu anh đào Freeze 455ml", SupplierId = context.Suppliers.First(s => s.CompanyName == "Công ty TNHH URC Việt Nam").SupplierId, Barcode = "8934564600869", CategoryId = context.Categories.First(c => c.CategoryName == "Nước uống").CategoryId, ImportPrice = 8000, RetailPrice = 10400}
+                };
+            context.Products.AddRange(products);
+            context.SaveChanges();
         }
     }
 }

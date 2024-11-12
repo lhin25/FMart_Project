@@ -8,10 +8,10 @@ namespace DataAccess.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int InvoiceDetailId { get; set; }
-        public int InvoiceId { get; set; }
+        public Guid InvoiceId { get; set; }
         [ForeignKey("InvoiceId")]
         public Invoice? Invoice { get; set; }
-        public int ProductId { get; set; }
+        public Guid ProductId { get; set; }
         [ForeignKey("ProductId")]
         public Product? Product { get; set; }
         public int Quantity { get; set; }
