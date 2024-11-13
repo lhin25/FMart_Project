@@ -1,3 +1,4 @@
+using DataAccess.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -45,20 +46,27 @@ namespace PRN221_FMart_Project.Pages
 
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, Email)
+                    new Claim(ClaimTypes.Name, Email),
+                    new Claim("StaffId", _staff.StaffId.ToString())
                 };
+
+                string areaName = string.Empty;
                 switch (_staff.RoleId)
                 {
                     case 0:
+                        areaName = "Admin";
                         claims.Add(new Claim(ClaimTypes.Role, "Admin"));
                         break;
                     case 1:
+                        areaName = "Staff";
                         claims.Add(new Claim(ClaimTypes.Role, "ShopManager"));
                         break;
                     case 2:
+                        areaName = "Staff";
                         claims.Add(new Claim(ClaimTypes.Role, "Stockkeeper"));
                         break;
                     case 3:
+                        areaName = "Staff";
                         claims.Add(new Claim(ClaimTypes.Role, "Cashier"));
                         break;
                     default: break;
@@ -68,8 +76,9 @@ namespace PRN221_FMart_Project.Pages
                 var principal = new ClaimsPrincipal(identity);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
                 HttpContext.Session.SetString("IsSignIn", "true");
+                HttpContext.Session.SetString("FullName", _staff.FullName);
                 HttpContext.Session.SetString("Staff", JsonConvert.SerializeObject(_staff));
-                return RedirectToPage();
+                return RedirectToPage("/Areas/" + areaName + "/Index", new { area = areaName });
             }
             else
             {
@@ -125,22 +134,23 @@ namespace PRN221_FMart_Project.Pages
                     {
                         CookieOptions options = new()
                         {
-                            Expires = DateTime.UtcNow.AddDays(7),
+                            Expires = DateTimeOffset.UtcNow.AddDays(7),
                             HttpOnly = true
                         };
                         Response.Cookies.Append("ReStaffId", staff.StaffId.ToString(), options);
                     }
 
                     HttpContext.Session.SetString("IsSignIn", "true");
+                    HttpContext.Session.SetString("FullName", staff.FullName);
                     HttpContext.Session.SetString("Staff", JsonConvert.SerializeObject(staff));
 
                     if (TempData["returnURL"] != null)
                     {
-                        string pageURL = TempData["returnURL"] as string;
+                        string pageURL = (string)TempData["returnURL"];
                         return Redirect(pageURL);
                     }
                     
-                    return RedirectToPage("/Index", new { area = areaName });
+                    return RedirectToPage("/Areas/" + areaName + "/Index", new { area = areaName });
                 }
                 else
                 {

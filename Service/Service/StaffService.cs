@@ -4,6 +4,7 @@ using DataAccess.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -35,9 +36,9 @@ namespace Service.Service
             throw new NotImplementedException();
         }
 
-        public override async Task<ICollection<Staff>>? GetAll()
+        public override async Task<ICollection<Staff>>? GetAll(Expression<Func<Staff, bool>>? filter = null, Func<IQueryable<Staff>, IOrderedQueryable<Staff>>? orderBy = null, string includeProperties = "")
         {
-            var staffs = await GetRepository.StaffRepository.GetAllAsync();
+            var staffs = await GetRepository.StaffRepository.GetAllAsync(filter, orderBy, includeProperties);
             return staffs;
         }
 

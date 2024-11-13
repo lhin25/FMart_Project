@@ -4,6 +4,7 @@ using DataAccess.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -35,7 +36,7 @@ namespace Service.Service
             throw new NotImplementedException();
         }
 
-        public override Task<ICollection<Activity>>? GetAll()
+        public override Task<ICollection<Activity>>? GetAll(Expression<Func<Activity, bool>>? filter = null, Func<IQueryable<Activity>, IOrderedQueryable<Activity>>? orderBy = null, string includeProperties = "")
         {
             throw new NotImplementedException();
         }

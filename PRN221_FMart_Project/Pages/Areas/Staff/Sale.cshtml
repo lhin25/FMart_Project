@@ -1,0 +1,63 @@
+﻿@page
+@model PRN221_FMart_Project.Pages.Areas.Staff.SaleModel
+@{
+
+}
+
+<div class="header-bar">
+    <i class='bx bxs-info-circle'></i>
+    Overview
+</div>
+
+<div class="salebox">
+    <div class="row full-height">
+        <div class="col-lg-9 card full-height">
+
+            <div class="product-field">
+                <div class="search-product card">
+                    <input type="text" autocomplete="off" class="form-control" id="barcode" value="" placeholder="Enter Barcode to find goods" data-toggle="tooltip" data-placement="top" title="Search">
+                </div>
+                <div class="product-list">
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 card full-height">
+            <div class="customer-field">
+
+                <div class="customer-search">
+                    <input type="text" autocomplete="off" class="form-control" id="customer" value="" placeholder="Enter Phone number to search" data-toggle="tooltip" data-placement="top" title="Search">
+                </div>
+                <div class="customer-new">
+                    <button id="btn-add-customer">
+                        <i class='bx bx-add-to-queue'></i>
+                    </button>
+                </div>
+            </div>
+            <form method="post" class="full-height">
+                <div class="cart">
+                    <div class="cart-customer" style="display: none">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="Invoice.CustomerId" />
+                        @if (Model.Customer != null)
+                        {
+                            <div class="customer-info">
+                                <p class="customer-full-name">@Model.Customer.FullName</p>
+                                <p>
+                                    <span class="customer-phone">@Model.Customer.PhoneNumber</span> |
+                                    <span class="customer-point">@Model.Customer.Points points</span>
+                                </p>
+                            </div>
+                        }
+                    </div>
+                    <div class="cart-items">
+                    </div>
+                    <div class="cart-summary">
+                    </div>
+                    <div class="cart-payment">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

@@ -64,10 +64,10 @@
                                 <span class="text nav-text">SALE</span>
                             </li>
                             <li>
-                                <a asp-area="Staff" asp-page="/Areas/Staff/Order">Order</a>
+                                <a href="#">Order</a>
                             </li>
                             <li>
-                                <a asp-area="Staff" asp-page="/Areas/Staff/Sale">Sale</a>
+                                <a asp-area="Staff" asp-page="/Sale">Sale</a>
                             </li>
                         </ul>
                     </li>
@@ -126,7 +126,7 @@
                     </li>
                     <li class="nav-link">
                         <div class="icon-link">
-                            <a asp-area="Staff" asp-page="/Areas/Staff/Dashboard">
+                            <a href="#">
                                 <i class="bx bx-bar-chart-alt-2 icon"></i>
                                 <span class="text nav-text">DASHBOARD</span>
                             </a>
@@ -158,11 +158,8 @@
                     <li class="nav-link">
                         <div class="icon-link">
                             <a href="#">
-                                @{
-                                    var fullname = Context.Session.GetString("FullName");
-                                }
                                 <i class="bx bx-user-circle icon"></i>
-                                <span class="text nav-text">@fullname</span>
+                                <span class="text nav-text">HIEN</span>
                             </a>
                         </div>
                     </li>
@@ -182,7 +179,7 @@
         </div>
     </nav>
     <div class="home">
-        <main role="main" class="">
+        <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>

@@ -37,6 +37,8 @@ builder.Services.AddDbContext<ApplicationContext>(options =>
 builder.Services.AddScoped<IGetRepository, GetRepository>();
 builder.Services.AddScoped<IStaffService,  StaffService>();
 builder.Services.AddScoped<IActivityService,  ActivityService>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
 
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -59,7 +61,10 @@ builder.Services.AddAuthorization(options =>
 });
 
 // Add services to the container.
-builder.Services.AddRazorPages();
+builder.Services.AddRazorPages(options =>
+{
+    options.Conventions.AddPageRoute("/Login", "");
+});
 
 var app = builder.Build();
 

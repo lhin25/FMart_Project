@@ -8,4 +8,5 @@ for (var i = 0; i < arrows.length; i++) {
         let arrowParrent = e.target.parentElement.parentElement;
         arrowParrent.classList.toggle("show");
     })
-}
+};
+
