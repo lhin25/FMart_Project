@@ -216,6 +216,8 @@
                     totl += item.UnitPrice * item.Quantity;
                 });
                 cart.Total = totl;
+                let cartText = JSON.stringify(cart);
+                inputCart.value = cartText;
                 var intoMoney = document.querySelector('#intoMoney');
                 intoMoney.textContent = formatCurrency(totl) + 'đ';
         });
