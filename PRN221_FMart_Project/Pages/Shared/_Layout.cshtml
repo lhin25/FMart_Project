@@ -33,7 +33,7 @@
         </nav>
     </header>
     -->
-    <nav class="sidebar">
+    <nav class="sidebar close">
         <header>
             <div class="image-text">
                 <span class="image">
@@ -64,10 +64,10 @@
                                 <span class="text nav-text">SALE</span>
                             </li>
                             <li>
-                                <a asp-area="Staff" asp-page="/Areas/Staff/Order">Order</a>
+                                <a asp-area="Staffs" asp-page="/Areas/Staffs/Invoices/InvoiceList">Invoice</a>
                             </li>
                             <li>
-                                <a asp-area="Staff" asp-page="/Areas/Staff/Sale">Sale</a>
+                                <a asp-area="Staffs" asp-page="/Areas/Staffs/Sale">Sale</a>
                             </li>
                         </ul>
                     </li>
@@ -84,10 +84,10 @@
                                 <span class="text nav-text">PARTNER</span>
                             </li>
                             <li>
-                                <a href="#">Customer</a>
+                                <a asp-area="Staffs" asp-page="/Areas/Staffs/Customers/Index">Customer</a>
                             </li>
                             <li>
-                                <a href="#">Supplier</a>
+                                <a asp-area="Staffs" asp-page="/Areas/Staffs/Suppliers/Index">Supplier</a>
                             </li>
                         </ul>
                     </li>
@@ -104,10 +104,10 @@
                                 <span class="text nav-text">PRODUCT</span>
                             </li>
                             <li>
-                                <a href="#">Category</a>
+                                <a asp-area="Staffs" asp-page="/Areas/Staffs/Categories/Index">Category</a>
                             </li>
                             <li>
-                                <a href="#">Product</a>
+                                <a asp-area="Staffs" asp-page="/Areas/Staffs/Products/Index">Product</a>
                             </li>
                         </ul>
                     </li>
@@ -126,21 +126,22 @@
                     </li>
                     <li class="nav-link">
                         <div class="icon-link">
-                            <a asp-area="Staff" asp-page="/Areas/Staff/Dashboard">
+                            <a asp-area="Staffs" asp-page="/Areas/Staffs/Dashboard">
                                 <i class="bx bx-bar-chart-alt-2 icon"></i>
                                 <span class="text nav-text">DASHBOARD</span>
                             </a>
                         </div>
                         <ul class="sub-menu blank">
                             <li>
-                                <a class="text nav-text">DASHBOARD</a>
+                                <a class="text nav-text" asp-area="Staffs" asp-page="/Areas/Staffs/Dashboard">DASHBOARD</a>
                             </li>
                         </ul>
                     </li>
                     <li class="nav-link">
                         <div class="icon-link">
                             <a href="#">
-                                <i class="bx bxs-id-card icon"></i>
+
+                                <i class="bx bx-user-circle icon"></i>
                                 <span class="text nav-text">STAFF</span>
                             </a>
                         </div>
@@ -157,11 +158,11 @@
                 <ul>
                     <li class="nav-link">
                         <div class="icon-link">
-                            <a href="#">
+                            <a href="#profileModal">
                                 @{
                                     var fullname = Context.Session.GetString("FullName");
                                 }
-                                <i class="bx bx-user-circle icon"></i>
+                                <i class="bx bxs-id-card icon"></i>
                                 <span class="text nav-text">@fullname</span>
                             </a>
                         </div>
@@ -169,10 +170,10 @@
                     <li class="nav-link">
                         <div class="icon-link">
                             <form method="post">
-                            <button asp-page="/Login" asp-page-handler="Logout">
-                                <i class="bx bx-log-out icon"></i>
-                                <span class="text nav-text">LOGOUT</span>
-                            </button>
+                                <button asp-page="/Login" asp-page-handler="Logout">
+                                    <i class="bx bx-log-out icon"></i>
+                                    <span class="text nav-text">LOGOUT</span>
+                                </button>
                             </form>
                         </div>
                     </li>
@@ -181,6 +182,33 @@
             </div>
         </div>
     </nav>
+    @*<div class="modal fade center" id="profileModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="profileModalLabel">Update account</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="profileForm" method="post">
+                    @Html.AntiForgeryToken()
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="fullName" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="fullName" name="fullName" required>
+                            <label for="phoneNumber" class="form-label">Email</label>
+                            <input type="text" class="form-control" id="email" name="Email" disabled>
+                            <label for="role" class="form-label">Role</label>
+                            <input type="text" class="form-control" id="role" name="Role" disabled>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-outline-success" id="updateProfileBtn">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>*@
     <div class="home">
         <main role="main" class="">
             @RenderBody()

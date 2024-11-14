@@ -64,9 +64,30 @@ namespace Service.Service
             return await GetRepository.CustomerRepository.ToPagination(listCustomers, pageIndex, pageSize);
         }
 
-        public override Task<bool> Update(Customer entity)
+        public async Task<int> GetTotalCustomers()
         {
-            throw new NotImplementedException();
+            return await GetRepository.CustomerRepository.GetTotalCustomers();
+        }
+
+        public override async Task<bool> Update(Customer entity)
+        {
+            try
+            {
+                var cate = await GetRepository.CustomerRepository.GetAsync(filter: cte => cte.CustomerId == entity.CustomerId);
+                if (cate == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    await GetRepository.CustomerRepository.UpdateAsync(cate);
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                throw new Exception("An error has occured.");
+            }
         }
     }
 }

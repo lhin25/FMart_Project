@@ -42,14 +42,16 @@ namespace Service.Service
             throw new NotImplementedException();
         }
 
-        public override Task<IEnumerable<Activity>>? GetAll()
+        public override async Task<IEnumerable<Activity>>? GetAll()
         {
-            throw new NotImplementedException();
+            var activities = await GetRepository.ActivityRepository.GetAllAsync(includeProperties: "Staff");
+            return activities;
         }
 
-        public override Task<Pagination<Activity>> GetPagination(int pageIndex, int pageSize)
+        public override async Task<Pagination<Activity>> GetPagination(int pageIndex, int pageSize)
         {
-            throw new NotImplementedException();
+            var listActivities = await GetAll();
+            return await GetRepository.ActivityRepository.ToPagination(listActivities, pageIndex, pageSize);
         }
 
         public override Task<bool> Update(Activity entity)

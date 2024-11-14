@@ -59,9 +59,25 @@ namespace Service.Service
             return _staff;
         }
 
-        public override Task<bool> Update(Staff entity)
+        public override async Task<bool> Update(Staff entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var cate = await GetRepository.StaffRepository.GetAsync(filter: cte => cte.StaffId == entity.StaffId);
+                if (cate == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    await GetRepository.StaffRepository.UpdateAsync(cate);
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                throw new Exception("An error has occured.");
+            }
         }
     }
 }

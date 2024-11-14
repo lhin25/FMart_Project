@@ -22,8 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\Areas\Staff\Suppliers\" />
-    <Folder Include="Pages\Areas\Staff\Products\" />
     <Folder Include="wwwroot\img\product\" />
   </ItemGroup>
 

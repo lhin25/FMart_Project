@@ -30,8 +30,8 @@ namespace PRN221_FMart_Project.Pages
         [Required]
         [PasswordPropertyText]
         public string Password { get; set; } = string.Empty;
-        [BindProperty]
-        public bool RememberMe { get; set; } = false;
+        //[BindProperty]
+        //public bool RememberMe { get; set; } = false;
         public string ErrorMessage { get; set; } = string.Empty;
 
         public async Task<IActionResult> OnGetAsync(string ReturnUrl = null)
@@ -58,15 +58,15 @@ namespace PRN221_FMart_Project.Pages
                         claims.Add(new Claim(ClaimTypes.Role, "Admin"));
                         break;
                     case 1:
-                        areaName = "Staff";
+                        areaName = "Staffs";
                         claims.Add(new Claim(ClaimTypes.Role, "ShopManager"));
                         break;
                     case 2:
-                        areaName = "Staff";
+                        areaName = "Staffs";
                         claims.Add(new Claim(ClaimTypes.Role, "Stockkeeper"));
                         break;
                     case 3:
-                        areaName = "Staff";
+                        areaName = "Staffs";
                         claims.Add(new Claim(ClaimTypes.Role, "Cashier"));
                         break;
                     default: break;
@@ -93,7 +93,7 @@ namespace PRN221_FMart_Project.Pages
             {
                 ErrorMessage = "";
                 var staff = await _staffService.Login(Email, Password);
-                if (staff != null)
+                if (staff != null && staff.IsActive == true)
                 {
                     var claims = new List<Claim>
                     {
@@ -110,7 +110,7 @@ namespace PRN221_FMart_Project.Pages
                     }
                     else
                     {
-                        areaName = "Staff";
+                        areaName = "Staffs";
                         switch (staff.RoleId)
                         {
                             case 1:
@@ -130,19 +130,20 @@ namespace PRN221_FMart_Project.Pages
                     var principal = new ClaimsPrincipal(identity);
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
-                    if (RememberMe)
-                    {
-                        CookieOptions options = new()
-                        {
-                            Expires = DateTimeOffset.UtcNow.AddDays(7),
-                            HttpOnly = true
-                        };
-                        Response.Cookies.Append("ReStaffId", staff.StaffId.ToString(), options);
-                    }
+                    //if (RememberMe)
+                    //{
+                    //    CookieOptions options = new()
+                    //    {
+                    //        Expires = DateTimeOffset.UtcNow.AddDays(7),
+                    //        HttpOnly = true
+                    //    };
+                    //    Response.Cookies.Append("ReStaffId", staff.StaffId.ToString(), options);
+                    //}
 
                     HttpContext.Session.SetString("IsSignIn", "true");
                     HttpContext.Session.SetString("FullName", staff.FullName);
                     HttpContext.Session.SetString("StaffId", staff.StaffId.ToString());
+                    HttpContext.Session.SetString("StaffEmail", staff.Email);
                     HttpContext.Session.SetString("Staff", JsonConvert.SerializeObject(staff));
 
                     if (TempData["returnURL"] != null)

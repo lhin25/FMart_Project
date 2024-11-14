@@ -49,14 +49,14 @@
                         <span asp-validation-for="@Model.Password" class="text-danger"></span>
                     </div>
                 </div>
-                <div class="remember-forgot">
+                @*<div class="remember-forgot">
 
                     <label asp-for="@Model.RememberMe">
                         <input asp-for="@Model.RememberMe" type="checkbox" />
                         Remember me
                     </label>
                     <a asp-page="./ForgotPassword">Forgot Password?</a>
-                </div>
+                    </div>*@
 
                 <input type="submit" class="btn" value="Login">
             </form>

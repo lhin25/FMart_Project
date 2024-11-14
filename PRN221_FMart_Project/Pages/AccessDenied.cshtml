@@ -4,16 +4,11 @@
     ViewData["Title"] = "Access Denied";
     Layout = null;
 }
-<style>
-    .access-denied{
-        height: 40vh;
-        width: 100%;
-        align-self: center;
-    }
-</style>
 
-<div class="m-3 text-center">
-    <img class="access-denied" src="~/img/access-denied.svg" />
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+<div class="m-3 text-center access-denied center">
+    <img class="access-denied-img" src="~/img/access-denied.svg" />
     <h1>Access Denied</h1>
     <h3>You have no permission to view this page.</h3>
 </div>

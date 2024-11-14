@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using PRN221_FMart_Project.SignalR;
 using Service.Service;
 using Net.payOS;
+using Microsoft.Data.SqlClient;
 
 var builder = WebApplication.CreateBuilder(args);
 IConfiguration config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
@@ -53,6 +54,8 @@ builder.Services.AddScoped<SignalrServer, SignalrServer>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IInvoiceService, InvoiceService>();
 builder.Services.AddScoped<IInvoiceDetailService, InvoiceDetailService>();
+builder.Services.AddScoped<ISupplierService, SupplierService>();
+builder.Services.AddScoped<IRoleService, RoleService>();
 
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

@@ -1,0 +1,54 @@
+﻿@page
+@model PRN221_FMart_Project.Pages.Areas.Staffs.DashboardModel
+@{
+}
+
+<div class="header-bar" style="height: 80px">
+    <i class='bx bxs-info-circle'></i>
+    Overview
+</div>
+
+<div class="numeric-field">
+    <div class="row">
+        <div class="col-lg-3 col-md-4 metric-item">
+            <div class="metric-container card">
+                <div class="metric-content">
+                    <div class="metric-label">
+                        <h6>NUMBER OF ORDER</h6>
+                    </div>
+                    <p class="metric-value">@Model.NumberOfOrders</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-4 metric-item ">
+            <div class="metric-container card">
+                <div class="metric-content">
+                    <div class="metric-label">
+                        <h6>REVENUE</h6>
+                    </div>
+                    <p class="metric-value">@Model.Revenue đ</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-4 metric-item ">
+            <div class="metric-container card">
+                <div class="metric-content">
+                    <div class="metric-label">
+                        <h6>PROFIT</h6>
+                    </div>
+                    <p class="metric-value">@Model.Profit đ</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-4 metric-item ">
+            <div class="metric-container card">
+                <div class="metric-content">
+                    <div class="metric-label">
+                        <h6>TOTAL CUSTOMERS</h6>
+                    </div>
+                    <p class="metric-value">@Model.TotalCustomers</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

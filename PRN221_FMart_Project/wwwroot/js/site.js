@@ -17,10 +17,10 @@ $('#newCustomerBtn').on('click', function () {
 function addCustomer(actionType) {
     const fullname = $('#fullName').val();
     const phonee = $('#phoneNumber').val();
-
+    console.log(fullname + phonee)
     $.ajax({
         type: 'POST',
-        url: '/Areas/Staff/Sale?handler=' + actionType, // Replace with your actual page model URL
+        url: '/Areas/Staffs/Sale?handler=' + actionType, // Replace with your actual page model URL
         data: {
             __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val(),
             name: fullname,
@@ -51,3 +51,4 @@ function formatCurrency(money) {
         maximumFractionDigits: 0
     });
 }
+

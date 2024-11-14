@@ -1,0 +1,100 @@
+﻿@page
+@model PRN221_FMart_Project.Pages.Areas.Staffs.Products.IndexModel
+
+@{
+    ViewData["Title"] = "Product List";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create" class="btn btn-primary">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayName("ProductName")
+            </th>
+            <th>
+                @Html.DisplayName("ProductDescription")
+            </th>
+            <th>
+                @Html.DisplayName("Category")
+            </th>
+            <th>
+                @Html.DisplayName("Supplier")
+            </th>
+            <th>
+                @Html.DisplayName("RetailPrice")
+            </th>
+            <th>
+                @Html.DisplayName("ImportPrice")
+            </th>
+            <th>
+                @Html.DisplayName("StockQty")
+            </th>
+            <th>
+                @Html.DisplayName("SaleQty")
+            </th>
+            <th>
+                @Html.DisplayName("ProductImg")
+            </th>
+            <th>
+                @Html.DisplayName("Barcode")
+            </th>
+            <th>
+                @Html.DisplayName("IsActive")
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Product.Items)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Supplier.CompanyName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RetailPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ImportPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StockQty)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SaleQty)
+                </td>
+                <td>
+                    @{
+                        var proImg = string.IsNullOrEmpty(item.ProductImg) ? "/img/empty.png" : item.ProductImg;
+                    }
+                    <img src="@proImg" style="height: 100px"/>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Barcode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsActive)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.ProductId">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.ProductId">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.ProductId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

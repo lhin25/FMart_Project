@@ -42,9 +42,24 @@ namespace Service.Service
             throw new NotImplementedException();
         }
 
+        public async Task<int> GetNumberInvoices()
+        {
+            return await GetRepository.InvoiceRepository.GetNumberInvoices();
+        }
+
         public override Task<Pagination<Invoice>> GetPagination(int pageIndex, int pageSize)
         {
             throw new NotImplementedException();
+        }
+
+        public decimal GetProfit()
+        {
+            return GetRepository.InvoiceRepository.GetProfit();
+        }
+
+        public decimal GetRevenue()
+        {
+            return GetRepository.InvoiceRepository.GetRevenue();
         }
 
         public override Task<bool> Update(Invoice entity)

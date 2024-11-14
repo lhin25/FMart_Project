@@ -9,6 +9,7 @@ namespace Service.Service
 {
     public interface IProductService : IGenericService<Product>
     {
-        public Task<IEnumerable<Product>> GetAllIgnoredIncluded();
+        public Task<IEnumerable<Product>> GetAllIgnoredStatus();
+        public Task<IEnumerable<Product>> GetAllIgnoreActive();
     }
 }

@@ -9,5 +9,8 @@ namespace Service.Service
 {
     public interface IInvoiceService : IGenericService<Invoice>
     {
+        public Task<int> GetNumberInvoices();
+        public decimal GetRevenue();
+        public decimal GetProfit();
     }
 }
