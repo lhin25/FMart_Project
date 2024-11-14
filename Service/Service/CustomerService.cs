@@ -14,34 +14,57 @@ namespace Service.Service
     {
         public CustomerService(IGetRepository getRepository) : base(getRepository) { }
 
-        public override Task Add(Customer entity)
+        public override async Task<bool> Add(Customer entity)
+        {
+            try
+            {
+                var customer = await GetRepository.CustomerRepository.GetAsync(filter: cte => cte.PhoneNumber == entity.PhoneNumber);
+                if (customer != null)
+                {
+                    return false;
+                }
+                else
+                {
+                    await GetRepository.CustomerRepository.CreateAsync(entity);
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                throw new Exception("An error has occured.");
+            }
+
+        }
+
+        public override Task<bool> Delete(object? id)
         {
             throw new NotImplementedException();
         }
 
-        public override Task Delete(object? id)
+        public override Task<Customer> Get(Expression<Func<Customer, bool>> filter, string? includeProperties = null)
         {
             throw new NotImplementedException();
         }
 
-        public override async Task<ICollection<Customer>>? GetAll(Expression<Func<Customer, bool>>? filter = null, Func<IQueryable<Customer>, IOrderedQueryable<Customer>>? orderBy = null, string includeProperties = "")
+        public override async Task<IEnumerable<Customer>>? GetAll()
         {
-            var customers = await GetRepository.CustomerRepository.GetAllAsync(filter, orderBy, includeProperties);
+            var customers = await GetRepository.CustomerRepository.GetAllAsync();
             return customers;
         }
 
-        public override async Task<Customer>? GetById(object? id)
+        public async Task<Customer> GetByPhoneNumber(string phoneNumber)
         {
-            var customer = await GetRepository.CustomerRepository.GetById(id);
+            var customer = await GetRepository.CustomerRepository.GetAsync(filter: i => i.PhoneNumber == phoneNumber);
             return customer;
         }
 
-        public override Task<Pagination<Customer>> GetPagination(int pageIndex, int pageSize)
+        public override async Task<Pagination<Customer>> GetPagination(int pageIndex, int pageSize)
         {
-            throw new NotImplementedException();
+            var listCustomers = await GetAll();
+            return await GetRepository.CustomerRepository.ToPagination(listCustomers, pageIndex, pageSize);
         }
 
-        public override Task Update(Customer entity)
+        public override Task<bool> Update(Customer entity)
         {
             throw new NotImplementedException();
         }

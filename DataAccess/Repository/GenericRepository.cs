@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using DataAccess.DataContext;
 using System.Linq.Expressions;
+using DataAccess.Utils;
 
 namespace DataAccess.Repository
 {
@@ -36,7 +37,7 @@ namespace DataAccess.Repository
             await _context.SaveChangesAsync();
         }
 
-        public async Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null, Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null, string includeProperties = "")
+        public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null, Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null, string includeProperties = "")
         {
             IQueryable<T> query = _dbSet;
             if(filter != null)
@@ -59,9 +60,39 @@ namespace DataAccess.Repository
             return await query.ToListAsync();
         }
 
+        public async Task<T> GetAsync(Expression<Func<T, bool>> filter, string? includeProperties = null)
+        {
+            IQueryable<T> query = _dbSet;
+            query = query.Where(filter);
+            if (!string.IsNullOrEmpty(includeProperties))
+            {
+                foreach(var property in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(property.Trim());
+                }
+            }
+            return await query.FirstOrDefaultAsync();
+        }
+
         public async Task<T> GetById(object? id)
         {
             return await _dbSet.FindAsync(id);
+        }
+
+        public async Task<Pagination<T>> ToPagination(IEnumerable<T> list, int pageIndex = 0, int pageSize = 10, params Expression<Func<T, object>>[] includes)
+        {
+            if(list is IQueryable<T> query){
+                list = includes.Aggregate(query, (entity, property) => entity.Include(property));
+            }
+
+            var result = new Pagination<T>
+            {
+                PageIndex = pageIndex,
+                PageSize = pageSize,
+                Items = list.Skip(pageIndex * pageSize).Take(pageSize).ToList(),
+                TotalItemsCount = list.Count()
+            };
+            return result;
         }
 
         public async Task UpdateAsync(T entity)

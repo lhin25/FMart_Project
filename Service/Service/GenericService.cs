@@ -17,19 +17,15 @@ namespace Service.Service
             this.GetRepository = getRepository;
         }
 
-        public abstract Task Add(T entity);
+        public abstract Task<bool> Add(T entity);
 
-        public abstract Task Delete(object? id);
+        public abstract Task<bool> Delete(object? id);
 
-        public abstract Task<ICollection<T>>? GetAll(
-            Expression<Func<T, bool>>? filter = null,
-            Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
-            string includeProperties = "");
-
-        public abstract Task<T>? GetById(object? id);
+        public abstract Task<IEnumerable<T>>? GetAll();
+        public abstract Task<T> Get(Expression<Func<T, bool>> filter, string? includeProperties = null);
 
         public abstract Task<Pagination<T>> GetPagination(int pageIndex, int pageSize);
 
-        public abstract Task Update(T entity);
+        public abstract Task<bool> Update(T entity);
     }
 }

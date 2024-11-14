@@ -9,5 +9,6 @@ namespace Service.Service
 {
     public interface ICustomerService : IGenericService<Customer>
     {
+        public Task<Customer> GetByPhoneNumber(string phoneNumber);
     }
 }

@@ -3,10 +3,20 @@ using DataAccess.Repository;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using PRN221_FMart_Project.SignalR;
 using Service.Service;
+using Net.payOS;
 
 var builder = WebApplication.CreateBuilder(args);
+IConfiguration config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
+PayOS payOS = new PayOS(config["PAYOS_ENV:CLIENT_ID"] ?? throw new Exception("Client ID not found"),
+                        config["PAYOS_ENV:API_KEY"] ?? throw new Exception("API Key not found"),
+                        config["PAYOS_ENV:CHECKSUM_KEY"] ?? throw new Exception("Checksum key not found"));
+
+builder.Services.AddSingleton(payOS);
+
+builder.Services.AddDistributedMemoryCache();
 
 builder.Services.AddSession(options =>
 {
@@ -39,6 +49,10 @@ builder.Services.AddScoped<IStaffService,  StaffService>();
 builder.Services.AddScoped<IActivityService,  ActivityService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<SignalrServer, SignalrServer>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IInvoiceService, InvoiceService>();
+builder.Services.AddScoped<IInvoiceDetailService, InvoiceDetailService>();
 
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -66,6 +80,7 @@ builder.Services.AddRazorPages(options =>
     options.Conventions.AddPageRoute("/Login", "");
 });
 
+builder.Services.AddSignalR();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -100,5 +115,11 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapRazorPages();
+    endpoints.MapHub<SignalrServer>("/signalrServer");
+
+});
 app.UseCors("AllowAll");
 app.Run();

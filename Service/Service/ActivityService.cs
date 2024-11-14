@@ -14,34 +14,35 @@ namespace Service.Service
     {
         public ActivityService(IGetRepository getRepository) : base(getRepository) { }
 
-        public override async Task Add(Activity entity)
+        public override async Task<bool> Add(Activity entity)
         {
             try
             {
                 var isExisted = await GetRepository.ActivityRepository.GetById(entity.ActivityId);
                 if (isExisted != null)
                 {
-                    throw new Exception("User already exists.");
+                    return false;
                 }
                 await GetRepository.ActivityRepository.CreateAsync(entity);
+                return true;
             } catch(Exception)
             {
-                throw;
+                throw new Exception("An error has occured.");
             }
                 
         }
 
-        public override Task Delete(object? id)
+        public override Task<bool> Delete(object? id)
         {
             throw new NotImplementedException();
         }
 
-        public override Task<ICollection<Activity>>? GetAll(Expression<Func<Activity, bool>>? filter = null, Func<IQueryable<Activity>, IOrderedQueryable<Activity>>? orderBy = null, string includeProperties = "")
+        public override Task<Activity> Get(Expression<Func<Activity, bool>> filter, string? includeProperties = null)
         {
             throw new NotImplementedException();
         }
 
-        public override Task<Activity>? GetById(object? id)
+        public override Task<IEnumerable<Activity>>? GetAll()
         {
             throw new NotImplementedException();
         }
@@ -51,7 +52,7 @@ namespace Service.Service
             throw new NotImplementedException();
         }
 
-        public override Task Update(Activity entity)
+        public override Task<bool> Update(Activity entity)
         {
             throw new NotImplementedException();
         }

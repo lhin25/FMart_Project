@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace Service.Service
 {
-    public interface IProductService : IGenericService<Product>
+    public interface ICategoryService : IGenericService<Category>
     {
-        public Task<IEnumerable<Product>> GetAllIgnoredIncluded();
     }
 }

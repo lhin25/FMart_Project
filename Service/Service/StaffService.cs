@@ -14,37 +14,38 @@ namespace Service.Service
     {
         public StaffService(IGetRepository getRepository) : base(getRepository) { }
 
-        public override async Task Add(Staff entity)
+        public override async Task<bool> Add(Staff entity)
         {
             try
             {
                 var existedStaff = await GetRepository.StaffRepository.GetAllAsync(filter: s => s.Email == entity.Email);
                 if (existedStaff != null)
                 {
-                    throw new Exception("Account already exists.");
+                    return false;
                 }
                 await GetRepository.StaffRepository.CreateAsync(entity);
+                return true;
             }
             catch (Exception)
             {
-                throw;
+                throw new Exception("An error has occured.");
             }
         }
 
-        public override Task Delete(object? id)
+        public override Task<bool> Delete(object? id)
         {
             throw new NotImplementedException();
         }
 
-        public override async Task<ICollection<Staff>>? GetAll(Expression<Func<Staff, bool>>? filter = null, Func<IQueryable<Staff>, IOrderedQueryable<Staff>>? orderBy = null, string includeProperties = "")
+        public override Task<Staff> Get(Expression<Func<Staff, bool>> filter, string? includeProperties = null)
         {
-            var staffs = await GetRepository.StaffRepository.GetAllAsync(filter, orderBy, includeProperties);
-            return staffs;
+            throw new NotImplementedException();
         }
 
-        public override async Task<Staff?> GetById(object? id)
+        public override async Task<IEnumerable<Staff>>? GetAll()
         {
-            return await GetRepository.StaffRepository.GetById(id);
+            var staffs = await GetRepository.StaffRepository.GetAllAsync(includeProperties: "Role");
+            return staffs;
         }
 
         public override Task<Pagination<Staff>> GetPagination(int pageIndex, int pageSize)
@@ -58,7 +59,7 @@ namespace Service.Service
             return _staff;
         }
 
-        public override Task Update(Staff entity)
+        public override Task<bool> Update(Staff entity)
         {
             throw new NotImplementedException();
         }

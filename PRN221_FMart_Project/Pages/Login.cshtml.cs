@@ -41,7 +41,7 @@ namespace PRN221_FMart_Project.Pages
             var reStaffId = Request.Cookies["ReStaffId"];
             if (!string.IsNullOrEmpty(reStaffId))
             {
-                var _staff = await _staffService.GetById(Guid.Parse(reStaffId));
+                var _staff = await _staffService.Get(filter: st => st.StaffId == Guid.Parse(reStaffId));
                 if (_staff == null) return Page();
 
                 var claims = new List<Claim>
@@ -142,6 +142,7 @@ namespace PRN221_FMart_Project.Pages
 
                     HttpContext.Session.SetString("IsSignIn", "true");
                     HttpContext.Session.SetString("FullName", staff.FullName);
+                    HttpContext.Session.SetString("StaffId", staff.StaffId.ToString());
                     HttpContext.Session.SetString("Staff", JsonConvert.SerializeObject(staff));
 
                     if (TempData["returnURL"] != null)

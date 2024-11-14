@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="~/PRN221_FMart_Project.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <!--
+    
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
@@ -22,174 +22,30 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="Admin" asp-page="/Areas/Admin/Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="Admin" asp-page="/Areas/Admin/Staff">Staff</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    -->
-    <nav class="sidebar">
-        <header>
-            <div class="image-text">
-                <span class="image">
-                    <img src="~/img/logo.png" alt="logo" />
-                </span>
-
-                <div class="text header-text">
-                    <span class="name">FMART</span>
-                </div>
-            </div>
-
-            <i class="bx bx-chevron-right toggle"></i>
-        </header>
-
-        <div class="menu-bar">
-            <div class="menu">
-                <ul class="menu-links">
-                    <li class="nav-link">
-                        <div class="icon-link">
-                            <a style="cursor: unset">
-                                <i class="bx bx-cart icon"></i>
-                                <span class="text nav-text">SALE</span>
-                            </a>
-                            <i class="bx bxs-chevron-down text arrow"></i>
-                        </div>
-                        <ul class="sub-menu">
-                            <li>
-                                <span class="text nav-text">SALE</span>
-                            </li>
-                            <li>
-                                <a href="#">Order</a>
-                            </li>
-                            <li>
-                                <a asp-area="Staff" asp-page="/Sale">Sale</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-link">
-                        <div class="icon-link">
-                            <a style="cursor: unset">
-                                <i class="bx bx-group icon"></i>
-                                <span class="text nav-text">PARTNER</span>
-                            </a>
-                            <i class="bx bxs-chevron-down text arrow"></i>
-                        </div>
-                        <ul class="sub-menu">
-                            <li>
-                                <span class="text nav-text">PARTNER</span>
-                            </li>
-                            <li>
-                                <a href="#">Customer</a>
-                            </li>
-                            <li>
-                                <a href="#">Supplier</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-link">
-                        <div class="icon-link">
-                            <a style="cursor: unset">
-                                <i class="bx bx-package icon"></i>
-                                <span class="text nav-text">PRODUCT</span>
-                            </a>
-                            <i class="bx bxs-chevron-down text arrow"></i>
-                        </div>
-                        <ul class="sub-menu">
-                            <li>
-                                <span class="text nav-text">PRODUCT</span>
-                            </li>
-                            <li>
-                                <a href="#">Category</a>
-                            </li>
-                            <li>
-                                <a href="#">Product</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-link">
-                        <div class="icon-link">
-                            <a href="#">
-                                <i class="bx bx-store-alt icon"></i>
-                                <span class="text nav-text">INVENTORY</span>
-                            </a>
-                        </div>
-                        <ul class="sub-menu blank">
-                            <li>
-                                <a class="text nav-text">INVENTORY</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-link">
-                        <div class="icon-link">
-                            <a href="#">
-                                <i class="bx bx-bar-chart-alt-2 icon"></i>
-                                <span class="text nav-text">DASHBOARD</span>
-                            </a>
-                        </div>
-                        <ul class="sub-menu blank">
-                            <li>
-                                <a class="text nav-text">DASHBOARD</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-link">
-                        <div class="icon-link">
-                            <a href="#">
-                                <i class="bx bxs-id-card icon"></i>
-                                <span class="text nav-text">STAFF</span>
-                            </a>
-                        </div>
-                        <ul class="sub-menu blank">
-                            <li>
-                                <a class="text nav-text">STAFF</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="bottom-content">
-                <ul>
-                    <li class="nav-link">
-                        <div class="icon-link">
-                            <a href="#">
-                                <i class="bx bx-user-circle icon"></i>
-                                <span class="text nav-text">HIEN</span>
-                            </a>
-                        </div>
-                    </li>
-                    <li class="nav-link">
-                        <div class="icon-link">
-                            <form method="post">
-                            <button asp-page="/Login" asp-page-handler="Logout">
-                                <i class="bx bx-log-out icon"></i>
-                                <span class="text nav-text">LOGOUT</span>
-                            </button>
-                            </form>
-                        </div>
-                    </li>
-                </ul>
-
-            </div>
-        </div>
-    </nav>
+    
+    
     <div class="home">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
-    <!--
+    
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2024 - PRN221_FMart_Project - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            &copy; 2024 - FMART - <a asp-area="" asp-page="/Privacy">Privacy</a>
         </div>
     </footer>
-    -->
+    
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

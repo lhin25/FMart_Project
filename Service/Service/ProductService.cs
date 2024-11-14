@@ -14,33 +14,40 @@ namespace Service.Service
     {
         public ProductService(IGetRepository getRepository) : base(getRepository) { }
 
-        public override Task Add(Product entity)
+        public override Task<bool> Add(Product entity)
         {
             throw new NotImplementedException();
         }
 
-        public override Task Delete(object? id)
+        public override Task<bool> Delete(object? id)
         {
             throw new NotImplementedException();
         }
 
-        public override async Task<ICollection<Product>>? GetAll(Expression<Func<Product, bool>>? filter = null, Func<IQueryable<Product>, IOrderedQueryable<Product>>? orderBy = null, string includeProperties = "")
+        public override Task<Product> Get(Expression<Func<Product, bool>> filter, string? includeProperties = null)
         {
-            var products = await GetRepository.ProductRepository.GetAllAsync(filter, orderBy, includeProperties);
+            throw new NotImplementedException();
+        }
+
+        public override async Task<IEnumerable<Product>>? GetAll()
+        {
+            var products = await GetRepository.ProductRepository.GetAllAsync(includeProperties: "Category,Supplier");
             return products;
         }
 
-        public override Task<Product>? GetById(object? id)
+        public async Task<IEnumerable<Product>> GetAllIgnoredIncluded()
         {
-            throw new NotImplementedException();
+            var products = await GetRepository.ProductRepository.GetAllAsync();
+            return products;
         }
 
-        public override Task<Pagination<Product>> GetPagination(int pageIndex, int pageSize)
+        public override async Task<Pagination<Product>> GetPagination(int pageIndex, int pageSize)
         {
-            throw new NotImplementedException();
+            var listProducts = await GetAll();
+            return await GetRepository.ProductRepository.ToPagination(listProducts, pageIndex, pageSize);
         }
 
-        public override Task Update(Product entity)
+        public override Task<bool> Update(Product entity)
         {
             throw new NotImplementedException();
         }
