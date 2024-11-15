@@ -14,10 +14,13 @@ namespace PRN221_FMart_Project.Pages.Areas.Staffs.Customers
     public class CreateModel : PageModel
     {
         private readonly ICustomerService _customerService;
+        private readonly IActivityService _activityService;
 
-        public CreateModel(ICustomerService customerService)
+        public CreateModel(ICustomerService customerService,
+            IActivityService activityService)
         {
             _customerService = customerService;
+            _activityService = activityService;
         }
 
         public IActionResult OnGet()
@@ -42,7 +45,13 @@ namespace PRN221_FMart_Project.Pages.Areas.Staffs.Customers
                 ModelState.AddModelError(string.Empty, "Unable to create. Please try again.");
                 return Page();
             }
-
+            Activity activity = new Activity
+            {
+                StaffId = Guid.Parse(HttpContext.Session.GetString("StaffId")),
+                Time = DateTime.Now,
+                Description = "Added new customer " + Customer.PhoneNumber + "."
+            };
+            var isAddAct = await _activityService.Add(activity);
             return RedirectToPage("./Index");
         }
     }

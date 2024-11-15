@@ -19,16 +19,19 @@ namespace PRN221_FMart_Project.Pages.Areas.Staffs.Products
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
         private readonly ISupplierService _supplierService;
+        private readonly IActivityService _activityService;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
         public CreateModel(IProductService productService,
             ICategoryService categoryService,
             ISupplierService supplierService,
+            IActivityService activityService,
             IWebHostEnvironment webHostEnvironment)
         {
             _productService = productService;
             _categoryService = categoryService;
             _supplierService = supplierService;
+            _activityService = activityService;
             _webHostEnvironment = webHostEnvironment;
         }
 
@@ -69,7 +72,13 @@ namespace PRN221_FMart_Project.Pages.Areas.Staffs.Products
                 ModelState.AddModelError(string.Empty, "Unable to create. Please try again.");
                 return Page();
             }
-
+            Activity invoiceAct = new Activity()
+            {
+                StaffId = Guid.Parse(HttpContext.Session.GetString("StaffId")),
+                Time = DateTime.Now,
+                Description = "Account " + HttpContext.Session.GetString("StaffEmail") + " added new product #" + Product.ProductId.ToString() + "."
+            };
+            var isAddActi = await _activityService.Add(invoiceAct);
             return RedirectToPage("./Index");
         }
     }

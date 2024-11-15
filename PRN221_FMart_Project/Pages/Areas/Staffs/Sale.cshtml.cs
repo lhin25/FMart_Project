@@ -122,7 +122,7 @@ namespace PRN221_FMart_Project.Pages.Areas.Staffs
                     {
                         StaffId = Guid.Parse(HttpContext.Session.GetString("StaffId")),
                         Time = DateTime.Now,
-                        Description = "Account " + HttpContext.Session.GetString("StaffEmail") + " added new customer " + phone + "."
+                        Description = "Added new customer " + phone + "."
                     };
                     var isAddAct = await _activityService.Add(activity);
                     return new JsonResult
@@ -162,7 +162,7 @@ namespace PRN221_FMart_Project.Pages.Areas.Staffs
                     {
                         StaffId = Guid.Parse(HttpContext.Session.GetString("StaffId")),
                         Time = DateTime.Now,
-                        Description = "Account " + HttpContext.Session.GetString("StaffEmail") + " added new invoice #" + invoice.InvoiceId.ToString() + "."
+                        Description = "Added new invoice #" + invoice.InvoiceId.ToString() + "."
                     };
                     var isAddActi = await _activityService.Add(invoiceAct);
                     Guid invoiceId = invoice.InvoiceId;

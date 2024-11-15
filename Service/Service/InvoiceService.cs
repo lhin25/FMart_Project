@@ -37,9 +37,10 @@ namespace Service.Service
             throw new NotImplementedException();
         }
 
-        public override Task<IEnumerable<Invoice>>? GetAll()
+        public override async Task<IEnumerable<Invoice>>? GetAll()
         {
-            throw new NotImplementedException();
+            var invoices = await GetRepository.InvoiceRepository.GetAllAsync(includeProperties: "Customer,Staff");
+            return invoices;
         }
 
         public async Task<int> GetNumberInvoices()
@@ -47,9 +48,10 @@ namespace Service.Service
             return await GetRepository.InvoiceRepository.GetNumberInvoices();
         }
 
-        public override Task<Pagination<Invoice>> GetPagination(int pageIndex, int pageSize)
+        public override async Task<Pagination<Invoice>> GetPagination(int pageIndex, int pageSize)
         {
-            throw new NotImplementedException();
+            var listInvoices = await GetAll();
+            return await GetRepository.InvoiceRepository.ToPagination(listInvoices, pageIndex, pageSize);
         }
 
         public decimal GetProfit()
