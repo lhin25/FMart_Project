@@ -7,23 +7,27 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using DataAccess.DataContext;
 using DataAccess.Models;
+using Service.Service;
+using DataAccess.Utils;
 
 namespace PRN221_FMart_Project.Pages.Areas.Staffs.Suppliers
 {
     public class IndexModel : PageModel
     {
-        private readonly DataAccess.DataContext.ApplicationContext _context;
+        private readonly ISupplierService _supplierService;
 
-        public IndexModel(DataAccess.DataContext.ApplicationContext context)
+        public IndexModel(ISupplierService supplierService)
         {
-            _context = context;
+            _supplierService = supplierService;
         }
 
-        public IList<Supplier> Supplier { get;set; } = default!;
+        public Pagination<Supplier> Supplier { get;set; } = default!;
+        public int PageIndex { get; set; } = 1;
+        public int PageSize { get; set; } = 10;
 
         public async Task OnGetAsync()
         {
-            Supplier = await _context.Suppliers.ToListAsync();
+            Supplier = await _supplierService.GetPagination(PageIndex - 1, PageSize);
         }
     }
 }

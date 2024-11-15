@@ -7,16 +7,17 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using DataAccess.DataContext;
 using DataAccess.Models;
+using Service.Service;
 
 namespace PRN221_FMart_Project.Pages.Areas.Staffs.Suppliers
 {
     public class CreateModel : PageModel
     {
-        private readonly DataAccess.DataContext.ApplicationContext _context;
+        private readonly ISupplierService _supplierService;
 
-        public CreateModel(DataAccess.DataContext.ApplicationContext context)
+        public CreateModel(ISupplierService supplierService)
         {
-            _context = context;
+            _supplierService = supplierService;
         }
 
         public IActionResult OnGet()
@@ -35,8 +36,7 @@ namespace PRN221_FMart_Project.Pages.Areas.Staffs.Suppliers
                 return Page();
             }
 
-            _context.Suppliers.Add(Supplier);
-            await _context.SaveChangesAsync();
+            await _supplierService.Add(Supplier);
 
             return RedirectToPage("./Index");
         }

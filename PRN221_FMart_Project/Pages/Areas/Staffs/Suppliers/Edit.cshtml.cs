@@ -8,16 +8,17 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DataAccess.DataContext;
 using DataAccess.Models;
+using Service.Service;
 
 namespace PRN221_FMart_Project.Pages.Areas.Staffs.Suppliers
 {
     public class EditModel : PageModel
     {
-        private readonly DataAccess.DataContext.ApplicationContext _context;
+        private readonly ISupplierService _supplierService;
 
-        public EditModel(DataAccess.DataContext.ApplicationContext context)
+        public EditModel(ISupplierService supplierService)
         {
-            _context = context;
+            _supplierService = supplierService;
         }
 
         [BindProperty]
@@ -30,7 +31,7 @@ namespace PRN221_FMart_Project.Pages.Areas.Staffs.Suppliers
                 return NotFound();
             }
 
-            var supplier =  await _context.Suppliers.FirstOrDefaultAsync(m => m.SupplierId == id);
+            var supplier =  await _supplierService.Get(filter: m => m.SupplierId == id);
             if (supplier == null)
             {
                 return NotFound();
@@ -48,30 +49,17 @@ namespace PRN221_FMart_Project.Pages.Areas.Staffs.Suppliers
                 return Page();
             }
 
-            _context.Attach(Supplier).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _supplierService.Update(Supplier);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!SupplierExists(Supplier.SupplierId))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
 
             return RedirectToPage("./Index");
-        }
-
-        private bool SupplierExists(int id)
-        {
-            return _context.Suppliers.Any(e => e.SupplierId == id);
         }
     }
 }

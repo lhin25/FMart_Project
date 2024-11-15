@@ -8,26 +8,28 @@ using Microsoft.EntityFrameworkCore;
 using DataAccess.DataContext;
 using DataAccess.Models;
 using Microsoft.AspNetCore.Authorization;
+using Service.Service;
+using DataAccess.Utils;
 
 namespace PRN221_FMart_Project.Pages.Areas.Staffs.Invoices
 {
     [Authorize(Roles = "ShopManager,Cashier")]
     public class InvoiceListModel : PageModel
     {
-        private readonly DataAccess.DataContext.ApplicationContext _context;
+        private readonly IInvoiceService _invoiceService;
 
-        public InvoiceListModel(DataAccess.DataContext.ApplicationContext context)
+        public InvoiceListModel(IInvoiceService invoiceService)
         {
-            _context = context;
+            _invoiceService = invoiceService;
         }
 
-        public IList<Invoice> Invoice { get;set; } = default!;
+        public Pagination<Invoice> Invoice { get;set; } = default!;
+        public int PageSize { get; set; } = 10;
+        public int PageIndex { get; set; } = 1;
 
         public async Task OnGetAsync()
         {
-            Invoice = await _context.Invoices
-                .Include(i => i.Customer)
-                .Include(i => i.Staff).ToListAsync();
+            Invoice = await _invoiceService.GetPagination(PageIndex - 1, PageSize);
         }
     }
 }
