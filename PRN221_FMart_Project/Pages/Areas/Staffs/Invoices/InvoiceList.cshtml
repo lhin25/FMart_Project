@@ -14,18 +14,18 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Invoice[0].Staff)
+                @Html.DisplayName("Staff")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Invoice[0].Customer)
+                @Html.DisplayName("Customer")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Invoice[0].CreatedAt)
+                @Html.DisplayName("CreatedAt")
             </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Invoice) {
+@foreach (var item in Model.Invoice.Items) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Staff.Email)

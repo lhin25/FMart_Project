@@ -36,7 +36,12 @@ namespace PRN221_FMart_Project.Pages.Areas.Staffs.Suppliers
                 return Page();
             }
 
-            await _supplierService.Add(Supplier);
+            var isAdd = await _supplierService.Add(Supplier);
+            if(!isAdd)
+            {
+                ModelState.AddModelError(string.Empty, "Unable to create. Please try again.");
+                return Page();
+            }
 
             return RedirectToPage("./Index");
         }

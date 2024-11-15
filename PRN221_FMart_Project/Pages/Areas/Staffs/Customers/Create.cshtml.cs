@@ -7,16 +7,17 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using DataAccess.DataContext;
 using DataAccess.Models;
+using Service.Service;
 
 namespace PRN221_FMart_Project.Pages.Areas.Staffs.Customers
 {
     public class CreateModel : PageModel
     {
-        private readonly DataAccess.DataContext.ApplicationContext _context;
+        private readonly ICustomerService _customerService;
 
-        public CreateModel(DataAccess.DataContext.ApplicationContext context)
+        public CreateModel(ICustomerService customerService)
         {
-            _context = context;
+            _customerService = customerService;
         }
 
         public IActionResult OnGet()
@@ -35,8 +36,12 @@ namespace PRN221_FMart_Project.Pages.Areas.Staffs.Customers
                 return Page();
             }
 
-            _context.Customers.Add(Customer);
-            await _context.SaveChangesAsync();
+            var isAdd = await _customerService.Add(Customer);
+            if (!isAdd)
+            {
+                ModelState.AddModelError(string.Empty, "Unable to create. Please try again.");
+                return Page();
+            }
 
             return RedirectToPage("./Index");
         }
